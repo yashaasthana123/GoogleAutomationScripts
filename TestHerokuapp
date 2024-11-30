@@ -1,0 +1,95 @@
+
+package Testawebsite;
+
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class TestHerokuapp {
+	static WebDriver driver = new ChromeDriver();
+
+    // Browser Tear up
+	public static void browser_tearup(){
+		driver.get("https://the-internet.herokuapp.com/");
+	}
+	
+	//Browser Tear Down
+	public static void browser_teardown(){
+		driver.quit();
+	}
+	
+	// A/B testing Link
+	public static void a_tag() {
+		WebElement text= driver.findElement(By.linkText("A/B Testing"));
+		System.out.println("The first text is: "+ text.getText());
+		text.click();
+		System.out.println(driver.getCurrentUrl());
+		driver.navigate(). back();	
+	}
+	
+	// A/B testing Link
+		public static void add_remove_element() {
+			driver.findElement(By.linkText("Add/Remove Elements")).click();
+			System.out.println(driver.getCurrentUrl());
+			driver.findElement(By.xpath("//button[@onclick= \"addElement()\"]")).click();
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+		    if((driver.findElement(By.xpath("//button[@onclick= \"deleteElement()\"]"))).isDisplayed()){
+		    	System.out.println("Element is Added");
+		    }else System.out.println("Element is NOT Added");
+		}
+		
+	//Basic Auth
+		public static void basic_auth() {
+			driver.findElement(By.linkText("Basic Auth")).click();
+			System.out.println(driver.getCurrentUrl());
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+			Alert alert = driver.switchTo().alert();
+			alert.sendKeys("admin" + "\t" + "admin"); 
+			alert.accept();
+		}
+		
+		
+	/*	Broken Images
+		public static void broken_images() {
+			driver.findElement(By.linkText("Broken Images")).click();
+			System.out.println(driver.getCurrentUrl());
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+		}*/
+		
+	//Challenge DOM
+		public static void challenge_dom() {
+				driver.findElement(By.linkText("Challenging DOM")).click();
+				System.out.println(driver.getCurrentUrl());
+				driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+			}	
+		
+	
+	//Print all the links
+	public static void print_link() {
+         WebElement ul_element= driver.findElement(By.xpath("//*[@id=\"content\"]/ul"));
+		 // Select all <li> items within the <ul>
+		 List<WebElement> li_elements = ul_element.findElements(By.tagName("li"));
+         for (WebElement li : li_elements) {
+			  System.out.println(li.getText());
+			  //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
+			  li.click();
+         }
+	}
+	
+	
+	public static void main(String[] args) {
+		browser_tearup();
+		//print_link();
+		//a_tag();
+		//add_remove_element();
+	      basic_auth();
+		//challenge_dom();
+		browser_teardown();
+	}
+
+}
