@@ -1,0 +1,47 @@
+package cricketbuzzTestPackage;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class CricketBuzzClass {
+	
+	public static void main(String[] args) {
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.cricbuzz.com/live-cricket-scorecard/94404/rsa-vs-sl-1st-test-sri-lanka-tour-of-south-africa-2024");
+		System.out.println(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[4]/div[2]/div[1]")).getText());
+		System.out.print(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[4]/div[2]/div[2]/div[1]/div[1]/span[1]")).getText() +"\t\t\t");
+		System.out.println(driver.findElement(By.xpath("/html/body/div[1]/div[2]/div[4]/div[2]/div[2]/div[1]/div[1]/span[2]")).getText());
+		
+		System.out.print(driver.findElement(By.xpath("//div[text()='Batter']")).getText()+"\t\t\t\t\t\t\t");
+		System.out.print(driver.findElement(By.xpath("//div[text()='R']")).getText()+"\t");
+		System.out.print(driver.findElement(By.xpath("//div[text()='B']")).getText()+"\t");
+		System.out.print(driver.findElement(By.xpath("//div[text()='4s']")).getText()+"\t");
+		System.out.print(driver.findElement(By.xpath("//div[text()='6s']")).getText()+"\t");
+		System.out.println(driver.findElement(By.xpath("//div[text()='SR']")).getText()+"\t");
+		
+		
+		WebElement Scorecard = driver.findElement(By.xpath("//*[@class= 'cb-col cb-col-100 cb-ltst-wgt-hdr']"));
+		//Column 1
+		List<WebElement> Player = Scorecard.findElements(By.tagName("a"));
+		//Column 2
+		List<WebElement> Player_Details = Scorecard.findElements(By.xpath("//span[@class='text-gray']"));
+		//System.out.println("Total links in the block are "+blockLinks.size());
+		//Column 3
+		List<WebElement> Player_Run1= Scorecard.findElements(By.xpath("//div[contains(@class,'cb-col cb-col-8')]")); 
+		
+		
+		for(int i=0;i<Player.size();i++)
+		{
+			System.out.print(Player.get(i).getText()+"\t\t");
+			System.out.print(Player_Details.get(i).getText()+"\t\t");
+			System.out.println(Player_Run1.get(i).getText()+"\t\t");
+					}
+		
+		
+	}
+
+}
